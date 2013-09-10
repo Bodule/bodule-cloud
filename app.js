@@ -10,6 +10,9 @@ var http = require('http');
 var path = require('path');
 var npm = require('npm');
 var grunt = require('grunt');
+var semver = require('semver');
+
+require('coffee-script');
 var gruntfile = require('./Gruntfile');
 
 var app = express();
@@ -32,20 +35,31 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/users', user.list);
-app.get('/bodule_modules/:name/:version/*', function(req, res, next) {
+app.get('/bodule_modules/:name/:version/:file', function(req, res, next) {
 	var moduleId = req.params.name + '@' + req.params.version
-	console.log(moduleId)
+	console.log('load ' + moduleId)
 	npm.load({}, function () {
-		npm.commands.install([moduleId], function() {
-			var oldCwd = process.cwd()
-			console.log(process.cwd() + '/node_modules/' + req.params.name + '/')
-			process.chdir(oldCwd + '/node_modules/' + req.params.name)
-			gruntfile(grunt)
-			grunt.task.run('default')
-			grunt.task.start()
-			process.chdir(oldCwd)
-			next()
-		})
+		var v = semver.valid(req.params.version)
+		if (v) {
+			npm.commands.install([moduleId], function() {
+				var oldCwd = process.cwd()
+				process.chdir(oldCwd + '/node_modules/' + req.params.name)
+				console.log('build ' + moduleId + ' in ' + process.cwd())
+				gruntfile(grunt)
+				grunt.task.run('default')
+				grunt.task.start()
+				process.chdir(oldCwd)
+				next()
+			})
+		} else if (semver.validRange(req.params.version)) {
+			npm.registry.get(req.params.name, 600, function(er, data) {
+				var versions = Object.keys(data.versions || {})
+				v = semver.maxSatisfying(versions, req.params.version, true)
+				res.redirect('/bodule_modules/' + req.params.name + '/' + v + '/' + req.params.file)
+			})
+		}
+
+
 	})
 })
 
