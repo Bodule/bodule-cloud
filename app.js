@@ -35,29 +35,25 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/users', user.list);
-app.get('/bodule_modules/:name/:version/:file', function(req, res, next) {
+app.get('/bodule_modules/:name/:version/*', function(req, res, next) {
 	var moduleId = req.params.name + '@' + req.params.version
 	console.log('load ' + moduleId)
 	npm.load({}, function () {
 		var v = semver.valid(req.params.version)
-		if (v) {
-			npm.commands.install([moduleId], function() {
-				var oldCwd = process.cwd()
-				process.chdir(oldCwd + '/node_modules/' + req.params.name)
-				console.log('build ' + moduleId + ' in ' + process.cwd())
-				gruntfile(grunt)
-				grunt.task.run('default')
-				grunt.task.start()
+		npm.commands.install([moduleId], function() {
+			var oldCwd = process.cwd()
+			process.chdir(oldCwd + '/node_modules/' + req.params.name)
+			console.log('build ' + moduleId + ' in ' + process.cwd())
+			gruntfile(grunt)
+			// Hack on async task
+			grunt.asyncCallback = function () {
 				process.chdir(oldCwd)
-				next()
-			})
-		} else if (semver.validRange(req.params.version)) {
-			npm.registry.get(req.params.name, 600, function(er, data) {
-				var versions = Object.keys(data.versions || {})
-				v = semver.maxSatisfying(versions, req.params.version, true)
-				res.redirect('/bodule_modules/' + req.params.name + '/' + v + '/' + req.params.file)
-			})
-		}
+				next()	
+			}
+			grunt.task.run('default')
+			grunt.task.start()
+
+		})
 
 
 	})

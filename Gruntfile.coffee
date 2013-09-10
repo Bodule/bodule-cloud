@@ -8,6 +8,8 @@ module.exports = (grunt)->
       bodule: "../../public/bodule_modules/<%= pkg.name %>/<%= pkg.version %>"
 
     bodule:
+      options:
+        pkg: grunt.file.readJSON 'package.json'
       bodule:
         files:
           '../../public/bodule_modules/<%= pkg.name %>/': '<%= pkg.main %>'
