@@ -9,11 +9,9 @@ var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 var npm = require('npm');
-var grunt = require('grunt');
 var semver = require('semver');
-
-require('coffee-script');
-var gruntfile = require('./Gruntfile');
+var exec = require('child_process').exec;
+var fs = require('fs');
 
 var app = express();
 
@@ -34,25 +32,20 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.get('/users', user.list);
 app.get('/bodule_modules/:name/:version/*', function(req, res, next) {
 	var moduleId = req.params.name + '@' + req.params.version
+	if (fs.existsSync('./public' + req.url)) {
+		return next()
+	}
 	console.log('load ' + moduleId)
 	npm.load({}, function () {
 		var v = semver.valid(req.params.version)
 		npm.commands.install([moduleId], function() {
-			var oldCwd = process.cwd()
-			process.chdir(oldCwd + '/node_modules/' + req.params.name)
-			console.log('build ' + moduleId + ' in ' + process.cwd())
-			gruntfile(grunt)
-			// Hack on async task
-			grunt.asyncCallback = function () {
-				process.chdir(oldCwd)
-				next()	
-			}
-			grunt.task.run('default')
-			grunt.task.start()
-
+			exec('node grunt.js ' + req.params.name, function(err, stdout, stderr) {
+				console.log(stdout)
+				console.log(stderr)
+				next()
+			})
 		})
 
 
