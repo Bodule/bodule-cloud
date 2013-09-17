@@ -5,7 +5,6 @@
 
 var express = require('express');
 var routes = require('./routes');
-var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 var npm = require('npm');
@@ -42,13 +41,15 @@ app.get('/bodule_modules/:name/:version/*', function(req, res, next) {
 		var v = semver.valid(req.params.version)
 		npm.commands.install([moduleId], function() {
 			exec('node grunt.js ' + req.params.name, function(err, stdout, stderr) {
-				console.log(stdout)
-				console.log(stderr)
-				next()
+				if (err) {
+					res.send(500, moduleId + " doesn't support now in bodule.org, I am working hard for it.")
+				} else {
+					// Use express static middleware serve the file
+					// Or just send 404 for wrong url address
+					next()
+				}
 			})
 		})
-
-
 	})
 })
 
