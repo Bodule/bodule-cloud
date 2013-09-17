@@ -1,0 +1,201 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+}
+</style>
+<title>目前Bodule包含：</title>
+
+</head>
+<body>
+<h1>Bodule</h1>
+
+<p>Bodule是一个浏览器端JavaScript模块化方案的尝试。以CommonJS标准编写模块，一处编写，到处使用（服务端和客户端）。提供<a href="http://bodule.org">bodule.org</a>云服务，无需下载管理第三方类库。</p>
+
+<h3>目前Bodule包含：</h3>
+
+<h4>1. 干净的模块加载器</h4>
+
+<p><a href="https://github.com/Bodule/bodule-engine">bodule.js</a>，模块规范与AMD、CMD类似；但：</p>
+
+<ul>
+<li>没有匿名模块</li>
+<li>没有浏览器兼容性</li>
+<li>没有插件</li>
+</ul>
+
+
+<p>使用CoffeeScript编写，用Uglify压缩后6.1k；</p>
+
+<h4>2. 构建工具</h4>
+
+<p><a href="https://github.com/Bodule/grunt-bodule-wrapping">grunt-bodule-wrapping</a>，可以把标准的CommonJS模块wrapping成bodule.js可加载的模块。</p>
+
+<blockquote><p>一次编写，到处执行；</p></blockquote>
+
+<h4>3. express中间件</h4>
+
+<p><a href="https://github.com/island205/bodule-middleware">bodule-middleware</a>，搭建起服务端模块和客户端模块的桥梁，只需要编写CommonJS模块，其他全部都由nodule搞定；</p>
+
+<h4>CommonJS模块云服务</h4>
+
+<p><a href="http://bodule.org">bodule.org</a>，在npm源中有大量优秀模块，bodule-cloud通过bodule.js为大家桥接出来，非常方便的在客户端使用！</p>
+
+<h3>Bodule还想做：</h3>
+
+<ul>
+<li>Bower模块云服务：兼容Bower模块；</li>
+<li>云服务CDN化：提供CDN话的云服务，让Bodule可以直接用于生产环境中；</li>
+<li>基于Bodule的前端开发解决方案，倾向于云化。</li>
+</ul>
+
+</body>
+</html>

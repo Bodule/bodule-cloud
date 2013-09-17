@@ -30,7 +30,6 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', routes.index);
 app.get('/bodule_modules/:name/:version/*', function(req, res, next) {
 	var moduleId = req.params.name + '@' + req.params.version
 	if (fs.existsSync('./public' + req.url)) {

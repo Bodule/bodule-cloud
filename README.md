@@ -1,7 +1,7 @@
 Bodule
 ======
 
-Bodule是一个浏览器端JavaScript模块化的解决方案。以CommonJS标准编写模块，一处编写，到处使用（服务端和客户端）。提供[bodule.org](http://bodule.org)云服务，无需下载管理第三方类库。
+Bodule是一个浏览器端JavaScript模块化方案的尝试。以CommonJS标准编写模块，一处编写，到处使用（服务端和客户端）。提供[bodule.org](http://bodule.org)云服务，无需下载管理第三方类库。
 
 ### 目前Bodule包含：
 
@@ -31,5 +31,5 @@ Bodule是一个浏览器端JavaScript模块化的解决方案。以CommonJS标�
 ### Bodule还想做：
 
 - Bower模块云服务：兼容Bower模块；
-- 云服务CDN化：提供CDN话的云服务，让Bodule.js可以直接用于生产环境中；
+- 云服务CDN化：提供CDN话的云服务，让Bodule可以直接用于生产环境中；
 - 基于Bodule的前端开发解决方案，倾向于云化。
